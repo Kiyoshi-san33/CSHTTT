@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "network: tests that download HuggingFace models or call live APIs",
+]
+

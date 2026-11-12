@@ -1,0 +1,7 @@
+Below is an original question, a baseline response, and a set of verification questions with their answers. Revise the baseline response so that it is consistent with the verification answers: remove materials that turned out to be implausible, add materials that were found to be missing, and correct wrong explanations. When listing multiple materials, sort them by the amount of the material used, from the most used to the least used, and provide a brief explanation for each material. Output only the final answer, without mentioning the verification process.{fmt}
+Original Question: {question}
+Baseline Response:
+{baseline}
+Verification Questions and Answers:
+{qa}
+Final Verified Response:

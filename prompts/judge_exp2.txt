@@ -1,0 +1,18 @@
+Component (vehicle repair domain): "{component}"
+Question given to the system: In the automotive context, which materials is the component "{component}" made out of?
+
+System output, split into numbered sentences:
+{sents}
+
+Materials extracted from the output (in order):
+{mats}
+
+Do the following tasks:
+Task 1: For each extracted material, is it a plausible material for this component? (true/false, in order)
+Task 2: List the numbers of all sentences that contain a factually incorrect statement (hallucination). Do NOT flag a sentence only because the material is implausible; flag only false factual claims. Empty list if none.
+Task 3: Rate the quality/completeness of the material predictions from 1 (very poor) to 5 (excellent). Consider missing important materials and superfluous ones.
+Task 4: Rate the quality of the explanations from 1 (very poor) to 5 (excellent): correct, sufficient, not superfluous.
+Optionally name missing materials in "comment".
+
+Reply with JSON:
+{{"plausible": [...], "incorrect_sentences": [...], "material_rating": 1-5, "explanation_rating": 1-5, "comment": "..."}}

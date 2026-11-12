@@ -1,0 +1,51 @@
+﻿# Tập đánh giá Thí nghiệm II: 50 linh kiện đầu của tập Thí nghiệm I (paper: 5 batch x 10 linh kiện).
+brake disc
+spark plug
+fuel injector
+piston ring
+timing belt
+oxygen sensor
+cylinder head gasket
+wiper blade
+oil filter
+radiator hose
+exhaust manifold
+brake pad
+connecting rod
+shock absorber
+catalytic converter
+wheel bearing
+ignition coil
+fuel tank
+coolant reservoir
+air filter
+head restraint
+leaf spring
+seat belt
+glow plug
+intake manifold
+camshaft position sensor
+clutch disc
+steering wheel
+door seal
+battery terminal
+turbocharger housing
+brake caliper
+coil spring
+valve spring
+oil pan
+heater core
+tail lamp lens
+fuel pump
+drive shaft
+tie rod end
+charge air cooler water sprayer
+refrigerant bypass valve
+engine piston
+thermostat housing
+crankshaft pulley
+wheel rim
+brake hose
+side mirror housing
+window regulator
+starter motor

@@ -1,0 +1,7 @@
+Component (vehicle repair domain): "{component}"
+Predicted materials:
+{mats}
+
+For EACH material, decide whether it is a plausible material that this vehicle component (or a part of it) can be made of.
+Reply with JSON: {{"plausible": [true/false for each material in order], "dont_know": false}}
+Set "dont_know" to true only if you do not know the component at all.

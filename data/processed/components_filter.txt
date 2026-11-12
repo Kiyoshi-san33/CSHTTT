@@ -1,0 +1,222 @@
+# Danh sách linh kiện ô tô ĐA TỪ dùng cho tiêu chí lọc Wikipedia (1).
+# Paper dùng 7.069 tên linh kiện độc quyền từ doanh nghiệp (không công bố).
+# Danh sách này là bản thay thế công khai, có thể mở rộng thêm (mỗi dòng 1 linh kiện, chữ thường).
+abs sensor
+accelerator pedal
+air bag
+air conditioning compressor
+air filter
+air intake manifold
+air mass sensor
+air spring
+airbag control module
+alternator belt
+alternator pulley
+anti-roll bar
+axle shaft
+ball joint
+battery cable
+battery terminal
+blower motor
+body panel
+brake booster
+brake caliper
+brake disc
+brake drum
+brake fluid
+brake hose
+brake line
+brake lining
+brake master cylinder
+brake pad
+brake pedal
+brake rotor
+brake shoe
+bumper cover
+cabin air filter
+cam follower
+camshaft position sensor
+camshaft sprocket
+car battery
+car seat
+catalytic converter
+charge air cooler
+clutch cable
+clutch disc
+clutch fork
+clutch master cylinder
+clutch pedal
+clutch plate
+clutch slave cylinder
+coil spring
+combustion chamber
+connecting rod
+constant velocity joint
+control arm
+coolant hose
+coolant pump
+coolant reservoir
+coolant temperature sensor
+cooling fan
+crankcase ventilation
+crankshaft position sensor
+crankshaft pulley
+cv joint
+cylinder block
+cylinder head
+cylinder head gasket
+cylinder liner
+dashboard panel
+diesel particulate filter
+differential gear
+disc brake
+door handle
+door hinge
+door lock
+door mirror
+door panel
+door seal
+drive belt
+drive shaft
+drum brake
+dual-mass flywheel
+egr valve
+electric motor
+engine block
+engine control unit
+engine mount
+engine oil
+engine valve
+exhaust gas recirculation
+exhaust manifold
+exhaust pipe
+exhaust system
+exhaust valve
+expansion valve
+fan belt
+fan clutch
+fender liner
+flex plate
+fog lamp
+fuel cap
+fuel filter
+fuel gauge
+fuel injection pump
+fuel injector
+fuel line
+fuel pressure regulator
+fuel pump
+fuel rail
+fuel tank
+gear lever
+gear shift
+gear stick
+glow plug
+head gasket
+head restraint
+headlamp lens
+headlight bulb
+heat exchanger
+heat shield
+heater core
+high-pressure pump
+hood latch
+idle air control valve
+ignition coil
+ignition switch
+injection pump
+inlet valve
+instrument cluster
+intake manifold
+intake valve
+intercooler pipe
+knock sensor
+lambda sensor
+leaf spring
+license plate
+lithium-ion battery
+lower control arm
+lug nut
+manifold gasket
+mass airflow sensor
+master cylinder
+motor mount
+muffler
+oil cooler
+oil filter
+oil pan
+oil pressure sensor
+oil pump
+oil seal
+oxygen sensor
+parking brake
+particulate filter
+piston pin
+piston ring
+power steering pump
+power steering fluid
+pressure plate
+pressure sensor
+propeller shaft
+radiator cap
+radiator fan
+radiator hose
+rear axle
+rear window
+rearview mirror
+rocker arm
+roof rack
+rubber seal
+seat belt
+seat cover
+shift fork
+shock absorber
+side mirror
+solenoid valve
+spark plug
+speed sensor
+starter motor
+steering column
+steering gear
+steering knuckle
+steering rack
+steering wheel
+stub axle
+sun visor
+sway bar
+tail light
+tail lamp
+tail pipe
+thermostat housing
+throttle body
+throttle valve
+tie rod
+timing belt
+timing chain
+timing gear
+tire pressure monitoring
+tire tread
+torque converter
+torsion bar
+transmission fluid
+transmission housing
+turbocharger turbine
+turn signal
+universal joint
+valve cover
+valve seat
+valve spring
+valve stem
+vibration damper
+water pump
+wheel bearing
+wheel hub
+wheel rim
+wheel speed sensor
+window regulator
+windshield washer
+windshield wiper
+wiper blade
+wiper motor
+wiring harness
+

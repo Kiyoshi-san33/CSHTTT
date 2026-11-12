@@ -1,0 +1,6 @@
+Below are passages that may contain useful information.
+{passages}
+
+Using the passages and your own knowledge, answer the following question concisely and factually (2-4 sentences). Do not cite the passages explicitly.
+Question: {vq}
+Answer:

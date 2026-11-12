@@ -1,0 +1,26 @@
+[
+ {
+  "name": "gpt_oss_120b",
+  "provider": "groq",
+  "model_id": "openai/gpt-oss-120b",
+  "checked_at": "2026-11-10T01:20:56.297240+00:00",
+  "dropped_params": [],
+  "listed": true
+ },
+ {
+  "name": "gemini_flash",
+  "provider": "gemini",
+  "model_id": "gemini-3.8-flash",
+  "checked_at": "2026-11-10T01:20:57.492755+00:00",
+  "dropped_params": [],
+  "listed": true
+ },
+ {
+  "name": "judge_qwen38_27b",
+  "provider": "groq",
+  "model_id": "qwen/qwen3.8-27b",
+  "checked_at": "2026-11-10T01:20:57.658386+00:00",
+  "dropped_params": [],
+  "listed": true
+ }
+]

@@ -1,0 +1,6 @@
+Below are passages that may contain useful information. Use them as background knowledge.
+{passages}
+
+Please answer the question below. When listing multiple materials, sort them by the amount of the material used, from the most used to the least used. Please also provide a brief explanation for each material. If the passages do not mention the materials directly, still answer using the passages and your own knowledge and suggest plausible materials that could be used in the component. Do not refer to or cite the passages explicitly in your answer.{fmt}
+Question: {question}
+Answer:

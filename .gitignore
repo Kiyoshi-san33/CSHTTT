@@ -1,0 +1,11 @@
+.venv/
+.env
+.pytest_cache/
+_backup_v1/
+data/raw/
+data/corpus/
+data/chunks/
+indexes/
+database/*.db
+database/*.db-shm
+database/*.db-wal

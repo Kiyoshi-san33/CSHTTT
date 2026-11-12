@@ -1,0 +1,9 @@
+Your task is to predict a comma-separated list of up to five materials that a vehicle component is made of. For example:
+Component: brake disc
+Materials: grey cast iron, carbon-ceramic composite, ceramic
+Component: motor oil
+Materials: mineral oil, synthetic oil, additives
+Component: igniter
+Materials: nickel, aluminium oxide, sintered alumina, steel
+Please predict the materials for the following component: {component}
+Just provide the names of the materials, separated by commas, without any explanation. Answer:

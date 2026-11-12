@@ -1,0 +1,53 @@
+[
+ {
+  "name": "gpt_oss_120b",
+  "provider": "groq",
+  "model_id": "openai/gpt-oss-120b",
+  "checked_at": "2026-11-10T01:14:01.810632+00:00",
+  "dropped_params": [],
+  "listed": true,
+  "ping_ok": true,
+  "served_model": "openai/gpt-oss-120b",
+  "latency_s": 0.621,
+  "finish_reason": "stop",
+  "usage": [
+   78,
+   39,
+   29
+  ]
+ },
+ {
+  "name": "gemini_flash",
+  "provider": "gemini",
+  "model_id": "gemini-3.8-flash",
+  "checked_at": "2026-11-10T01:14:03.697465+00:00",
+  "dropped_params": [],
+  "listed": true,
+  "ping_ok": true,
+  "served_model": "gemini-3.8-flash",
+  "latency_s": 131.794,
+  "finish_reason": "stop",
+  "usage": [
+   8,
+   1,
+   null
+  ]
+ },
+ {
+  "name": "judge_qwen38_27b",
+  "provider": "groq",
+  "model_id": "qwen/qwen3.8-27b",
+  "checked_at": "2026-11-10T01:19:58.967501+00:00",
+  "dropped_params": [],
+  "listed": true,
+  "ping_ok": true,
+  "served_model": "qwen/qwen3.8-27b",
+  "latency_s": 0.181,
+  "finish_reason": "stop",
+  "usage": [
+   19,
+   2,
+   null
+  ]
+ }
+]

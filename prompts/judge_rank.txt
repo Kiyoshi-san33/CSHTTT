@@ -1,0 +1,8 @@
+Component (vehicle repair domain): "{component}"
+Question: In the automotive context, which materials is the component "{component}" made out of?
+
+Below are {n} different answers labelled {labels}.
+{answers}
+
+Rank ALL answers from best to worst according to the correctness and usefulness of their CONTENT for an automotive expert (ignore formatting and style).
+Reply with JSON: {{"ranking": [labels from best to worst]}}

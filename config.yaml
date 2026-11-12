@@ -1,0 +1,136 @@
+# =====================================================================
+# Vehicle Material Reproduction – Research Prototype
+# Dựa trên: Wagner et al. (2026) – LLMs & RAG for plausible and explainable
+# material prediction of vehicle components.
+# =====================================================================
+
+# --- Profile truy hồi đang dùng: adapted | reproduction ---------------------
+# Ghi đè bằng tham số --profile của CLI hoặc biến môi trường VMR_PROFILE.
+active_profile: adapted
+
+# --- Nhà cung cấp LLM -------------------------------------------------------
+# groq / gemini / ollama: gọi qua OpenAI-compatible Chat Completions (thư viện openai).
+# gemini_native: adapter tùy chọn qua google-genai cho tính năng riêng của Gemini.
+providers:
+  groq:          {base_url: "https://api.groq.com/openai/v1", api_key_env: GROQ_API_KEY}
+  gemini:        {base_url: "https://generativelanguage.googleapis.com/v1beta/openai/", api_key_env: GEMINI_API_KEY}
+  gemini_native: {api_key_env: GEMINI_API_KEY}
+  ollama:        {base_url: "http://localhost:11434/v1", base_url_env: OLLAMA_BASE_URL, api_key_env: null}
+  dummy:         {}   # LLM giả để chạy thử pipeline, không tốn tiền
+
+# --- 2 model thực nghiệm chính (Experiment II: 2 LLM x 3 phương pháp) -------
+# params: tham số riêng của provider; adapter sẽ bỏ qua tham số provider không hỗ trợ.
+# price_per_mtok: [input, output] USD / 1 triệu token (dùng để ước tính chi phí).
+generators:
+  - name: gpt_oss_120b
+    provider: groq
+    model: "openai/gpt-oss-120b"
+    rpm: 25
+    params: {reasoning_effort: medium}
+    price_per_mtok: [0.15, 0.60]
+  - name: gemini_flash
+    provider: gemini
+    model: "gemini-3.8-flash"
+    rpm: 9
+    params: {reasoning_effort: low}
+    price_per_mtok: null
+
+# Model local – CHỈ để phát triển/kiểm thử offline, không vào đánh giá chính (--dev).
+dev_generators:
+  - {name: qwen3_8b, provider: ollama, model: "qwen3:8b", rpm: 600, params: {think: false}}
+
+# Experiment I – Adapted Baseline (GPT-OSS 120B), thay cho Mixtral-8x22B của paper.
+exp1_generators: [gpt_oss_120b]
+
+# --- LLM-as-a-Judge (đánh giá BỔ SUNG, tách riêng khỏi đánh giá của người) ---
+# qwen/qwen3.8-27b đang ở trạng thái PREVIEW trên Groq: model ID được ghim cố định,
+# ngày đánh giá được ghi vào từng nhãn. Kiểm tra trước: python -m src.llm.check --judges
+judges:
+  - name: judge_qwen38_27b
+    provider: groq
+    model: "qwen/qwen3.8-27b"
+    rpm: 25
+    params: {reasoning_format: parsed}
+    price_per_mtok: null
+
+generation:
+  temperature: 0.0        # 0.0 để kết quả lặp lại được; giống nhau cho mọi model
+  max_tokens: 4000        # model suy luận (GPT-OSS, Gemini) tốn thêm token suy luận
+  step_max_tokens:        # giới hạn theo bước (vẫn rộng để không cắt phần suy luận)
+    exp1: 2000
+    cove_plan: 2000
+    cove_execute: 1500
+    judge: 3000
+
+# Thêm 1 câu yêu cầu định dạng "1. Vật liệu: giải thích" để parse tự động.
+# (Lệch nhẹ so với prompt gốc - ghi rõ trong báo cáo.)
+enforce_list_format: true
+
+# --- Wikipedia ---------------------------------------------------------------
+wiki:
+  dump_date: "latest"     # nên ghi lại ngày dump thực tế (vd 20261001) để tái lập
+  dump_dir: "data/raw/wiki_dump"
+  min_components: 2       # tiêu chí (1): >= 2 linh kiện đa từ
+  min_material_mentions: 3   # tiêu chí (2)
+  min_auto_mentions: 3
+  streams_per_task: 20
+  workers: 11
+
+paths:
+  prompts: "prompts"
+  components_filter: "data/processed/components_filter.txt"
+  test_exp1: "data/test_sets/exp1_components.txt"   # 100 linh kiện
+  test_exp2: "data/test_sets/exp2_components.txt"   # 50 linh kiện
+  articles: "data/corpus/articles.jsonl"
+  passages: "data/chunks/passages.jsonl"
+  indexes: "indexes"
+  database: "database/experiments.db"
+  results: "results"
+
+# --- Truy hồi: thiết lập chung cho cả 2 profile -------------------------------
+retrieval:
+  passage_words: 200
+  passage_overlap: 50
+  sparse_top_k: 50
+  dense_top_k: 50
+  final_top_k: 10
+  join_mode: "rrf"        # reciprocal rank fusion (DocumentJoiner của Haystack)
+  rrf_k: 60
+  shard_size: 10000
+  bm25:                   # thay cho OpenSearch BM25 của paper (adaptation)
+    implementation: bm25s
+    method: lucene
+    k1: 1.5
+    b: 0.75
+    stopwords: en
+    stemmer: english
+
+retrieval_profiles:
+  # Tái lập: DPR + BM25 theo thiết lập paper công bố (Haystack, DPR multiset).
+  reproduction:
+    dense_backend: dpr
+    ctx_encoder: "facebook/dpr-ctx_encoder-multiset-base"
+    question_encoder: "facebook/dpr-question_encoder-multiset-base"
+    max_seq_len_passage: 256
+    max_seq_len_query: 64
+    embed_batch_size: 32
+  # Điều chỉnh: BGE-small + FAISS + bm25s + RRF.
+  adapted:
+    dense_backend: bge
+    bge_model: "BAAI/bge-small-en-v1.5"
+    bge_query_instruction: "Represent this sentence for searching relevant passages: "
+    bge_max_seq_len: 512
+    embed_batch_size: 64
+
+cove:
+  max_questions: 5
+
+# --- Đánh giá ------------------------------------------------------------------
+evaluation:
+  human_prefix: "human_"  # mã annotator người luôn bắt đầu bằng tiền tố này
+  exp1:
+    min_annotators: 4     # paper: 4 chuyên gia
+    coverage_at: [1, 3]
+  exp2:
+    min_annotators: 3     # 3 người / linh kiện (hoặc / batch)
+    agreement_n: 2        # COVERAGE@2 / PRECISION@2

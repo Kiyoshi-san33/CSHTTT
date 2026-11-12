@@ -1,0 +1,104 @@
+# Tập đánh giá Thí nghiệm I (100 linh kiện vật lý, ~98% là cụm đa từ như paper).
+# Tiêu chí như paper: bỏ linh kiện là cả "hệ thống" (vd clutch), bỏ linh kiện quá giống nhau.
+# Thí nghiệm II dùng 50 linh kiện đầu tiên (xem eval_components_exp2.txt).
+brake disc
+spark plug
+fuel injector
+piston ring
+timing belt
+oxygen sensor
+cylinder head gasket
+wiper blade
+oil filter
+radiator hose
+exhaust manifold
+brake pad
+connecting rod
+shock absorber
+catalytic converter
+wheel bearing
+ignition coil
+fuel tank
+coolant reservoir
+air filter
+head restraint
+leaf spring
+seat belt
+glow plug
+intake manifold
+camshaft position sensor
+clutch disc
+steering wheel
+door seal
+battery terminal
+turbocharger housing
+brake caliper
+coil spring
+valve spring
+oil pan
+heater core
+tail lamp lens
+fuel pump
+drive shaft
+tie rod end
+charge air cooler water sprayer
+refrigerant bypass valve
+engine piston
+thermostat housing
+crankshaft pulley
+wheel rim
+brake hose
+side mirror housing
+window regulator
+starter motor
+alternator
+muffler
+water pump impeller
+fuel rail
+egr valve
+knock sensor
+exhaust valve
+rocker arm
+ball joint
+engine mount
+timing chain
+power steering hose
+bumper cover
+dashboard panel
+cabin air filter
+brake booster
+master cylinder
+sway bar link
+control arm bushing
+universal joint
+drum brake shoe
+parking brake cable
+headlamp reflector
+fuse box cover
+wiring harness connector
+lambda sensor
+throttle body
+intercooler pipe
+valve cover gasket
+oil cooler
+radiator fan shroud
+fan clutch
+heat shield
+flywheel ring gear
+pressure plate
+clutch release bearing
+crankshaft seal
+fuel filler neck
+fuel pressure regulator
+high-pressure fuel pump
+diesel particulate filter
+mass airflow sensor
+wheel speed sensor
+door hinge
+hood latch
+sun visor
+seat cover
+steering rack boot
+lithium-ion battery cell
+cooling fan blade
+
