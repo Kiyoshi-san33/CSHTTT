@@ -23,7 +23,39 @@ Hệ thống thực nghiệm và đánh giá dự đoán vật liệu linh kiệ
 
 ---
 
-## 2. Cấu trúc Thư mục
+## 2. Đối chiếu với Bài báo gốc (Wagner et al., 2026) – Tái lập & Cải tiến
+
+Dự án bảo toàn **100% phương pháp luận cốt lõi** của bài báo gốc, đồng thời bổ sung các **điều chỉnh & cải tiến (Adaptations & Extensions)** để tối ưu cho môi trường máy trạm đơn (Windows CPU-only, 32 GB RAM) và mở rộng khả năng đánh giá tự động.
+
+### 2.1 Những thành phần THAY THẾ / ĐIỀU CHỈNH (Adaptations & Improvements)
+
+| Hạng mục | Bài báo gốc (Wagner et al., 2026) | Dự án hiện tại (`config.yaml`) | Lý do thay thế & Ghi chú |
+|---|---|---|---|
+| **LLM cho Experiment I** *(Material-only baseline, 100 linh kiện)* | **Mixtral-8x22B** | **`openai/gpt-oss-120b`** (qua Groq API) | Mixtral-8x22B đã cũ/khó truy cập; thay bằng model mở 120B hiện đại, tốc độ cao trên Groq. |
+| **2 LLM cho Experiment II** *(2 LLM × 3 phương pháp, 50 linh kiện)* | **Mixtral-8x22B** (Open-weight) & **GPT-4** (Proprietary) | **`openai/gpt-oss-120b`** (Groq) & **`gemini-3.8-flash`** (Google API) | Giữ nguyên cấu trúc **1 model trọng số mở lớn vs. 1 model thương mại**, nhưng tối ưu chi phí và tốc độ gọi API. |
+| **Vector DB & Sparse Search Engine** | **OpenSearch** + **Haystack framework** (cần chạy cụm server Docker nặng RAM) | **`bm25s`** (Lucene BM25 + Snowball stemmer) + **FAISS CPU (`IndexFlatIP`)** | Không cần cài Docker/OpenSearch, chạy trực tiếp trên ổ cứng & RAM laptop 32 GB cực nhanh, giữ nguyên 100% công thức toán học Lucene BM25 (`k1=1.5, b=0.75`), Exact Inner Product và RRF (`k=60`). |
+| **Dense Embedding Model (Retrieval)** | **Facebook DPR** (`dpr-ctx_encoder-multiset-base` & `dpr-question_encoder-multiset-base`, 768 chiều) | Hỗ trợ **cả 2 chế độ (`profile`)**:<br>• **`adapted` (Mặc định):** `BAAI/bge-small-en-v1.5` (384 chiều, 512 tokens)<br>• **`reproduction`:** Giữ nguyên cặp **Facebook DPR** của bài báo | `bge-small-en-v1.5` nhẹ hơn một nửa, hỗ trợ ngữ cảnh 512 tokens (khớp đoạn 200 từ tốt hơn giới hạn 256 của DPR) và chạy CPU nhanh gấp ~4 lần. Vẫn có thể bật `--profile reproduction` để chạy đúng DPR của tác giả. |
+| **Định dạng đầu ra Prompt** | Văn bản tự do, tác giả tách vật liệu thủ công | Thêm 1 câu hậu tố (`enforce_list_format: true` trong `config.yaml`) yêu cầu liệt kê dạng `1. Material: explanation` | Giúp hệ thống tự động bóc tách chính xác tên vật liệu và lời giải thích mà không làm thay đổi nội dung suy luận. |
+| **Đánh giá (Evaluation)** | Chỉ có **Chuyên gia con người** (4 người ở Exp I; 10 người chia nhóm 3 người/linh kiện ở Exp II) | **Giao diện gán nhãn mù cho Người** (`app/pages/annotation.py`) **+ Bổ sung Giám khảo LLM độc lập** (`qwen/qwen3.8-27b` trong `src/evaluation/llm_judge.py`) | Kết quả của Người (`kind="human"`) và LLM Judge (`kind="llm"`) được **lưu tách biệt hoàn toàn**, đồng thời có thêm báo cáo độ đồng thuận giữa Người và LLM Judge (`Human-LLM Agreement`). |
+
+### 2.2 Những thành phần GIỮ NGUYÊN 100% theo Bài báo gốc (Core Reproduction)
+
+1. **Tiêu chí lọc Wikipedia & Cắt đoạn (`src/rag/wiki/extract.py`, `src/rag/chunking.py`):**
+   - Lọc bài viết Wikipedia tiếng Anh thỏa mãn: chứa **≥ 2 tên linh kiện đa từ** HOẶC (**≥ 3 từ khóa vật liệu** VÀ **≥ 3 từ khóa ô tô**).
+   - Cắt bài viết thành các đoạn văn **200 từ**, độ chồng lấn (**overlap**) **50 từ**.
+2. **Truy hồi lai Hybrid Retrieval (`src/rag/hybrid_retriever.py`):**
+   - Lấy **Top-50** từ Sparse (BM25) + **Top-50** từ Dense → Gộp bằng thuật toán **Reciprocal Rank Fusion (RRF, $k=60$)** → Chọn ra **Top-10 passages** đưa vào prompt.
+3. **3 Phương pháp trong Experiment II (`no_rag.py`, `rag.py`, `cove.py`):**
+   - **No-RAG:** Hỏi LLM trực tiếp (Phụ lục B).
+   - **RAG:** Truy hồi Top-10 đoạn văn Wikipedia cho linh kiện rồi đưa vào prompt (Phụ lục B).
+   - **CoVe (Chain-of-Verification – 4 bước, Phụ lục C):** *(1) Baseline* → *(2) Plan verification questions* → *(3) Execute verification với RAG* → *(4) Final verified response*.
+4. **Bộ chỉ số thống kê & đánh giá (`src/evaluation/`):**
+   - **Experiment I:** `Coverage@1`, `Coverage@3`, `Precision@1`, `Precision@3` trên 100 linh kiện.
+   - **Experiment II:** `Coverage@2`, `Precision@2`, tỷ lệ `Factual Error`, điểm giải thích `Likert 1–5`, kiểm định tương quan thứ hạng **Kendall's $\tau$** và độ đồng thuận **Krippendorff's $\alpha$** trên 50 linh kiện.
+
+---
+
+## 3. Cấu trúc Thư mục
 
 ```
 vehicle_material_reproduction_project/
@@ -69,13 +101,13 @@ vehicle_material_reproduction_project/
 
 ---
 
-## 3. Cài đặt & Kích hoạt Môi trường
+## 4. Cài đặt & Kích hoạt Môi trường
 
 > **⚠️ LƯU Ý QUAN TRỌNG TRƯỚC KHI CHẠY BẤT KỲ LỆNH NÀO:**
 > Mỗi khi mở một cửa sổ Terminal / PowerShell mới, bạn **BẮT BUỘC phải kích hoạt môi trường ảo `.venv`** (khi kích hoạt thành công, đầu dòng lệnh sẽ có chữ `(.venv)`).
 > Nếu quên kích hoạt `.venv`, Windows sẽ dùng Python mặc định của máy và báo lỗi thiếu thư viện như `ModuleNotFoundError: No module named 'yaml'`.
 
-### 3.1 Kích hoạt môi trường ảo `.venv` (Mỗi lần mở PowerShell mới)
+### 4.1 Kích hoạt môi trường ảo `.venv` (Mỗi lần mở PowerShell mới)
 ```powershell
 cd d:\vehicle_material_reproduction_project
 
@@ -87,14 +119,14 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 *(Mẹo: Nếu không muốn kích hoạt `.venv`, bạn có thể thay chữ `python` bằng `.\.venv\Scripts\python.exe` ở đầu mọi câu lệnh bên dưới).*
 
-### 3.2 Tạo mới / Cài đặt lại thư viện (Chỉ chạy khi chưa có `.venv` hoặc thiếu gói)
+### 4.2 Tạo mới / Cài đặt lại thư viện (Chỉ chạy khi chưa có `.venv` hoặc thiếu gói)
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-### 3.3 Cấu hình API Key & Kiểm tra hệ thống
+### 4.3 Cấu hình API Key & Kiểm tra hệ thống
 ```powershell
 # 1. Tạo file .env từ file mẫu (nếu chưa có) và điền GROQ_API_KEY, GEMINI_API_KEY
 if (!(Test-Path .env)) { Copy-Item .env.example .env }
@@ -108,7 +140,7 @@ python -m src.llm.check --ping
 
 ---
 
-## 4. Quy trình Thực nghiệm Đầy đủ (End-to-End CLI)
+## 5. Quy trình Thực nghiệm Đầy đủ (End-to-End CLI)
 
 > **Nhắc lại:** Đảm bảo đầu dòng lệnh PowerShell đã có `(.venv)`. Nếu chưa, hãy chạy `.\.venv\Scripts\Activate.ps1`.
 
@@ -172,7 +204,7 @@ python -m src.storage.export
 
 ---
 
-## 5. Xử lý Lỗi Thường gặp (Troubleshooting)
+## 6. Xử lý Lỗi Thường gặp (Troubleshooting)
 
 | Lỗi gặp phải | Nguyên nhân | Cách khắc phục |
 |---|---|---|
@@ -183,7 +215,7 @@ python -m src.storage.export
 
 ---
 
-## 6. Bảng Ánh xạ Lệnh CLI (Cũ → Mới)
+## 7. Bảng Ánh xạ Lệnh CLI (Cũ → Mới)
 
 | Tác vụ | Lệnh cũ (đã ngừng dùng) | Lệnh mới |
 |---|---|---|
