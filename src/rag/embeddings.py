@@ -34,7 +34,14 @@ class BGEEmbedder(BaseEmbedder):
     normalized = True
 
     def __init__(self, rcfg: dict):
+        import os
+        import torch
         from sentence_transformers import SentenceTransformer
+
+        # Tận dụng tối đa nhân vật lý CPU khi chạy offline indexing
+        cpu_cores = os.cpu_count() or 6
+        if torch.get_num_threads() < max(cpu_cores - 2, 4):
+            torch.set_num_threads(max(cpu_cores - 2, 4))
 
         self.model_name = rcfg.get("bge_model", "BAAI/bge-small-en-v1.5")
         self.query_instruction = rcfg.get(
@@ -42,12 +49,101 @@ class BGEEmbedder(BaseEmbedder):
         self.max_seq_len = int(rcfg.get("bge_max_seq_len", 512))
         self.model = SentenceTransformer(self.model_name)
         self.model.max_seq_length = self.max_seq_len
-        self.dim = int(self.model.get_sentence_embedding_dimension())
+        get_dim = getattr(self.model, "get_embedding_dimension", None) or self.model.get_sentence_embedding_dimension
+        self.dim = int(get_dim())
 
-    def encode_passages(self, titles: list[str], texts: list[str], batch_size: int = 64) -> np.ndarray:
+        # Khởi tạo thêm phiên DirectML (GPU tích hợp AMD/Intel) nếu có sẵn để chạy song song CPU + iGPU
+        self._dml_sess = None
+        self._dml_tok = None
+        if rcfg.get("use_directml", True):
+            try:
+                import onnxruntime as ort
+                if "DmlExecutionProvider" in ort.get_available_providers():
+                    from huggingface_hub import hf_hub_download
+                    from transformers import AutoTokenizer
+
+                    onnx_path = hf_hub_download(self.model_name, "onnx/model.onnx")
+                    so = ort.SessionOptions()
+                    so.log_severity_level = 3
+                    self._dml_sess = ort.InferenceSession(
+                        onnx_path, sess_options=so, providers=["DmlExecutionProvider", "CPUExecutionProvider"]
+                    )
+                    self._dml_tok = AutoTokenizer.from_pretrained(self.model_name)
+                    self._dml_inputs = [i.name for i in self._dml_sess.get_inputs()]
+            except Exception:
+                self._dml_sess = None
+
+    def _encode_dml_batch(self, batch_docs: list[str]) -> np.ndarray:
+        enc = self._dml_tok(
+            batch_docs, padding=True, truncation=True, max_length=self.max_seq_len, return_tensors="np"
+        )
+        feed = {k: enc[k].astype(np.int64) for k in self._dml_inputs if k in enc}
+        out = self._dml_sess.run(["last_hidden_state"], feed)[0][:, 0].astype(np.float32)
+        norms = np.linalg.norm(out, axis=1, keepdims=True)
+        return out / np.maximum(norms, 1e-12)
+
+    def encode_passages(
+        self, titles: list[str], texts: list[str], batch_size: int = 64,
+        show_progress_bar: bool = False, desc: str = "bge"
+    ) -> np.ndarray:
+        if not texts:
+            return np.zeros((0, self.dim), dtype=np.float32)
         docs = [f"{t}. {x}" for t, x in zip(titles, texts)]
+        n = len(docs)
+
+        # Nếu có DirectML GPU và số lượng lớn (encode shard), chạy song song Work-Stealing (CPU + DirectML iGPU)
+        # kết hợp sắp xếp theo độ dài để giảm tối đa padding
+        if self._dml_sess is not None and n >= batch_size * 2:
+            from concurrent.futures import ThreadPoolExecutor
+            import threading
+            from tqdm import tqdm
+
+            order = np.argsort([len(d) for d in docs])
+            sorted_docs = [docs[i] for i in order]
+            batches = [(b, min(n, b + batch_size)) for b in range(0, n, batch_size)]
+            results: dict[int, np.ndarray] = {}
+            cursor = [0]
+            lock = threading.Lock()
+            bar = tqdm(total=len(batches), desc=f"{desc} [CPU+GPU]", leave=False) if show_progress_bar else None
+
+            def worker(use_gpu: bool) -> None:
+                while True:
+                    with lock:
+                        if cursor[0] >= len(batches):
+                            return
+                        idx = cursor[0]
+                        cursor[0] += 1
+                    lo, hi = batches[idx]
+                    chunk = sorted_docs[lo:hi]
+                    if use_gpu:
+                        vec = self._encode_dml_batch(chunk)
+                    else:
+                        vec = self.model.encode(
+                            chunk, batch_size=batch_size, normalize_embeddings=True,
+                            show_progress_bar=False, convert_to_numpy=True
+                        )
+                    with lock:
+                        results[idx] = np.asarray(vec, dtype=np.float32)
+                        if bar is not None:
+                            bar.update(1)
+
+            try:
+                with ThreadPoolExecutor(max_workers=2) as ex:
+                    f_gpu = ex.submit(worker, True)
+                    f_cpu = ex.submit(worker, False)
+                    f_gpu.result()
+                    f_cpu.result()
+            finally:
+                if bar is not None:
+                    bar.close()
+
+            sorted_vecs = np.concatenate([results[i] for i in range(len(batches))], axis=0)
+            out = np.empty_like(sorted_vecs, dtype=np.float32)
+            out[order] = sorted_vecs
+            return out
+
         vec = self.model.encode(docs, batch_size=batch_size, normalize_embeddings=True,
-                                show_progress_bar=False, convert_to_numpy=True)
+                                show_progress_bar=show_progress_bar, convert_to_numpy=True)
         return np.asarray(vec, dtype=np.float32)
 
     def encode_query(self, query: str) -> np.ndarray:

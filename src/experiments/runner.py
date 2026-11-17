@@ -104,7 +104,10 @@ def execute_matrix(cfg: dict, exp: str = "exp2", models: list[str] | None = None
     profile = cfg.get("active_profile", "adapted")
     summary: dict[str, int] = {}
     for llm in llms:
+        model_quota_exhausted = False
         for method in methods:
+            if model_quota_exhausted:
+                break
             uses_rag = exp == "exp2" and method != "norag"
             spec = ExperimentSpec(
                 exp=exp,
@@ -130,6 +133,10 @@ def execute_matrix(cfg: dict, exp: str = "exp2", models: list[str] | None = None
                     n_new += 1
                 except Exception as e:  # noqa: BLE001
                     R.save_error_run(cfg, spec, c, str(e))
+                    if "TPD" in str(e) or "RPD" in str(e) or "hạn mức 200.000 token/ngày" in str(e):
+                        print(f"\n⚠️ {e}\n--> Tạm dừng model [{llm.name}] (đã lưu an toàn mọi câu làm xong) và chuyển sang model tiếp theo!\n")
+                        model_quota_exhausted = True
+                        break
                     raise
             summary[spec.id] = n_new
     return summary

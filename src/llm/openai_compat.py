@@ -40,13 +40,41 @@ class OpenAICompatLLM(BaseLLM):
         base_url = (os.getenv(pc["base_url_env"]) if pc.get("base_url_env") else None) \
             or pc.get("base_url") or self.DEFAULT_BASE_URL
         key_env = pc.get("api_key_env", self.DEFAULT_KEY_ENV)
-        key = os.getenv(key_env) if key_env else None
-        if not key:
+        keys: list[str] = []
+        if key_env:
+            raw_val = os.getenv(key_env) or ""
+            for k in raw_val.split(","):
+                if k.strip():
+                    keys.append(k.strip())
+            for idx in range(2, 10):
+                extra_k = (os.getenv(f"{key_env}_{idx}") or "").strip()
+                if extra_k and extra_k not in keys:
+                    keys.append(extra_k)
+        if not keys:
             if self.REQUIRES_KEY:
                 raise RuntimeError(f"Thiếu API key: hãy đặt biến {key_env} trong file .env (model {self.name}).")
-            key = "not-needed"
+            keys = ["not-needed"]
         self.base_url = base_url
-        self.client = OpenAI(base_url=base_url, api_key=key, timeout=180, max_retries=0)
+        self._api_keys = keys
+        self._key_idx = 0
+        self._openai_cls = OpenAI
+        self.client = OpenAI(base_url=base_url, api_key=self._api_keys[0], timeout=180, max_retries=0)
+
+    def rotate_key(self) -> bool:
+        """Chuyển sang API key dự phòng tiếp theo nếu người dùng khai báo nhiều key trong .env."""
+        if len(getattr(self, "_api_keys", [])) <= 1:
+            return False
+        next_idx = self._key_idx + 1
+        if next_idx >= len(self._api_keys):
+            return False
+        self._key_idx = next_idx
+        self.client = self._openai_cls(
+            base_url=self.base_url, api_key=self._api_keys[self._key_idx], timeout=180, max_retries=0
+        )
+        with self._lock:
+            self._next_allowed = 0.0
+        print(f"  [{self.name}] Đã tự động chuyển sang API key #{self._key_idx + 1}/{len(self._api_keys)}!")
+        return True
 
     def _complete(self, messages, max_tokens, temperature) -> LLMResponse:
         r = self.client.chat.completions.create(

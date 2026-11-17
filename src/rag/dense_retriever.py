@@ -39,11 +39,18 @@ def build_dense_index(cfg: dict, passages: list[dict]) -> dict:
         if f.exists():
             continue
         lo, hi = s * S, min(n, (s + 1) * S)
-        vecs = []
-        for i in tqdm(range(lo, hi, B), desc=f"{backend} shard {s + 1}/{n_shards}", leave=False):
-            j = min(hi, i + B)
-            vecs.append(embedder.encode_passages(titles[i:j], texts[i:j], batch_size=B))
-        arr = np.concatenate(vecs, axis=0) if vecs else np.zeros((0, embedder.dim), dtype=np.float32)
+        desc = f"{backend} shard {s + 1}/{n_shards}"
+        if backend == "bge":
+            arr = embedder.encode_passages(
+                # pyrefly: ignore[unexpected-keyword]
+                titles[lo:hi], texts[lo:hi], batch_size=B, show_progress_bar=True, desc=desc
+            )
+        else:
+            vecs = []
+            for i in tqdm(range(lo, hi, B), desc=desc, leave=False):
+                j = min(hi, i + B)
+                vecs.append(embedder.encode_passages(titles[i:j], texts[i:j], batch_size=B))
+            arr = np.concatenate(vecs, axis=0) if vecs else np.zeros((0, embedder.dim), dtype=np.float32)
         np.save(f, arr)
         done_now += hi - lo
         elapsed = max(time.time() - t0, 1e-6)

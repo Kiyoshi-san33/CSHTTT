@@ -26,6 +26,7 @@ generators:
     provider: groq
     model: "openai/gpt-oss-120b"
     rpm: 25
+    tpm: 7500               # Giới hạn gói miễn phí Groq (on_demand): 8,000 tokens/phút -> tự động giãn nhịp theo token
     params: {reasoning_effort: medium}
     price_per_mtok: [0.15, 0.60]
   - name: gemini_flash
@@ -50,6 +51,7 @@ judges:
     provider: groq
     model: "qwen/qwen3.8-27b"
     rpm: 25
+    tpm: 5800               # Giới hạn TPM gói miễn phí Groq cho Qwen 27B
     params: {reasoning_format: parsed}
     price_per_mtok: null
 
