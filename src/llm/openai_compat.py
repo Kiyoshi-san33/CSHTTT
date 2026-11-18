@@ -56,28 +56,67 @@ class OpenAICompatLLM(BaseLLM):
             keys = ["not-needed"]
         self.base_url = base_url
         self._api_keys = keys
+        self.num_keys = len(keys)
         self._key_idx = 0
         self._openai_cls = OpenAI
-        self.client = OpenAI(base_url=base_url, api_key=self._api_keys[0], timeout=180, max_retries=0)
+        self._clients = [OpenAI(base_url=base_url, api_key=k, timeout=180, max_retries=0) for k in keys]
+        self._key_next_allowed = [0.0 for _ in keys]
+        self._key_exhausted = [False for _ in keys]
+        self._tls = __import__("threading").local()
+        self.client = self._clients[0]
+
+    def _wait(self):
+        """Chọn API key rảnh sớm nhất (Load-Balancing qua tất cả các key còn hạn mức)."""
+        import time
+
+        while True:
+            with self._lock:
+                active = [i for i, ex in enumerate(self._key_exhausted) if not ex]
+                if not active:
+                    active = [0]
+                best_i = min(active, key=lambda i: (self._key_next_allowed[i], i))
+                now = time.time()
+                wait_s = self._key_next_allowed[best_i] - now
+                if wait_s <= 0:
+                    self._key_next_allowed[best_i] = now + self.min_interval
+                    self._tls.key_idx = best_i
+                    return
+            time.sleep(min(wait_s, 1.0))
+
+    def _record_tokens(self, total_tokens: int) -> None:
+        if not self.tpm or total_tokens <= 0:
+            return
+        import time
+
+        idx = getattr(self._tls, "key_idx", 0)
+        with self._lock:
+            tpm_wait = 60.0 * float(total_tokens) / self.tpm
+            self._key_next_allowed[idx] = max(self._key_next_allowed[idx], time.time() + tpm_wait)
+
+    def _penalize_current_key(self, wait_s: float) -> None:
+        import time
+
+        idx = getattr(self._tls, "key_idx", 0)
+        with self._lock:
+            self._key_next_allowed[idx] = max(self._key_next_allowed[idx], time.time() + wait_s)
 
     def rotate_key(self) -> bool:
-        """Chuyển sang API key dự phòng tiếp theo nếu người dùng khai báo nhiều key trong .env."""
-        if len(getattr(self, "_api_keys", [])) <= 1:
-            return False
-        next_idx = self._key_idx + 1
-        if next_idx >= len(self._api_keys):
-            return False
-        self._key_idx = next_idx
-        self.client = self._openai_cls(
-            base_url=self.base_url, api_key=self._api_keys[self._key_idx], timeout=180, max_retries=0
-        )
+        """Đánh dấu API key hiện tại đã hết hạn mức ngày (TPD) và chuyển sang các key còn lại."""
+        idx = getattr(self._tls, "key_idx", self._key_idx)
         with self._lock:
-            self._next_allowed = 0.0
-        print(f"  [{self.name}] Đã tự động chuyển sang API key #{self._key_idx + 1}/{len(self._api_keys)}!")
-        return True
+            self._key_exhausted[idx] = True
+            remaining = [i for i, ex in enumerate(self._key_exhausted) if not ex]
+            if not remaining:
+                return False
+            self._key_idx = remaining[0]
+            self.client = self._clients[self._key_idx]
+            print(f"  [{self.name}] Key #{idx + 1} chạm trần ngày (TPD) -> dùng tiếp {len(remaining)} key còn lại!")
+            return True
 
     def _complete(self, messages, max_tokens, temperature) -> LLMResponse:
-        r = self.client.chat.completions.create(
+        idx = getattr(self._tls, "key_idx", self._key_idx)
+        client = self._clients[idx]
+        r = client.chat.completions.create(
             model=self.model, messages=messages, temperature=temperature, max_tokens=max_tokens,
             extra_body=dict(self.params) or None,
         )

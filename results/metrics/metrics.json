@@ -1,0 +1,205 @@
+{
+  "active_profile": "adapted",
+  "corpus": {
+    "articles": 24205,
+    "criterion_1": 16802,
+    "criterion_2": 7403,
+    "avg_article_words": 3007,
+    "passages": 489318,
+    "passage_words": 200,
+    "passage_overlap": 50
+  },
+  "exp1": {
+    "human": {},
+    "llm_judge": {
+      "n_items": 100,
+      "annotators": [
+        "judge_qwen38_27b"
+      ],
+      "iaa": NaN,
+      "coverage": {
+        "1": 1.0
+      },
+      "precision": {
+        "1": 0.8995983935742972
+      }
+    },
+    "human_llm_agreement": {
+      "n_common_items": 0,
+      "per_judge": [],
+      "disagreements": []
+    }
+  },
+  "exp2": {
+    "human": {},
+    "llm_judge": {
+      "n_outputs": 300,
+      "annotators": [
+        "judge_qwen38_27b"
+      ],
+      "agreement_n": 1,
+      "iaa": NaN,
+      "alpha_task3": NaN,
+      "alpha_task4": NaN,
+      "kendall_tau": NaN,
+      "coverage": {
+        "gemini_flash": {
+          "norag": "100.0%",
+          "rag@adapted": "100.0%",
+          "cove@adapted": "100.0%"
+        },
+        "gpt_oss_120b": {
+          "norag": "100.0%",
+          "rag@adapted": "100.0%",
+          "cove@adapted": "100.0%"
+        },
+        "Average": {
+          "norag": "100.0%",
+          "rag@adapted": "100.0%",
+          "cove@adapted": "100.0%"
+        }
+      },
+      "precision": {
+        "gemini_flash": {
+          "norag": "99.6%",
+          "rag@adapted": "98.4%",
+          "cove@adapted": "99.0%"
+        },
+        "gpt_oss_120b": {
+          "norag": "96.3%",
+          "rag@adapted": "97.0%",
+          "cove@adapted": "96.7%"
+        },
+        "Average": {
+          "norag": "98.0%",
+          "rag@adapted": "97.5%",
+          "cove@adapted": "97.7%"
+        }
+      },
+      "factual_error_mean": {
+        "gemini_flash": {
+          "norag": "4.0%",
+          "rag@adapted": "6.0%",
+          "cove@adapted": "10.0%"
+        },
+        "gpt_oss_120b": {
+          "norag": "22.0%",
+          "rag@adapted": "24.0%",
+          "cove@adapted": "22.0%"
+        },
+        "Average": {
+          "norag": "13.0%",
+          "rag@adapted": "15.0%",
+          "cove@adapted": "16.0%"
+        }
+      },
+      "factual_error_any": {
+        "gemini_flash": {
+          "norag": "4.0%",
+          "rag@adapted": "6.0%",
+          "cove@adapted": "10.0%"
+        },
+        "gpt_oss_120b": {
+          "norag": "22.0%",
+          "rag@adapted": "24.0%",
+          "cove@adapted": "22.0%"
+        },
+        "Average": {
+          "norag": "13.0%",
+          "rag@adapted": "15.0%",
+          "cove@adapted": "16.0%"
+        }
+      },
+      "material_rating": {
+        "gemini_flash": {
+          "norag": "4.74",
+          "rag@adapted": "4.16",
+          "cove@adapted": "4.38"
+        },
+        "gpt_oss_120b": {
+          "norag": "4.64",
+          "rag@adapted": "4.76",
+          "cove@adapted": "4.60"
+        },
+        "Average": {
+          "norag": "4.69",
+          "rag@adapted": "4.46",
+          "cove@adapted": "4.49"
+        }
+      },
+      "explanation_rating": {
+        "gemini_flash": {
+          "norag": "4.88",
+          "rag@adapted": "4.64",
+          "cove@adapted": "4.72"
+        },
+        "gpt_oss_120b": {
+          "norag": "4.66",
+          "rag@adapted": "4.60",
+          "cove@adapted": "4.56"
+        },
+        "Average": {
+          "norag": "4.77",
+          "rag@adapted": "4.62",
+          "cove@adapted": "4.64"
+        }
+      },
+      "avg_rank": {
+        "gemini_flash": {
+          "norag": "2.18",
+          "rag@adapted": "3.52",
+          "cove@adapted": "3.26"
+        },
+        "gpt_oss_120b": {
+          "norag": "2.98",
+          "rag@adapted": "1.68",
+          "cove@adapted": "1.38"
+        },
+        "Average": {
+          "norag": "2.58",
+          "rag@adapted": "2.60",
+          "cove@adapted": "2.32"
+        }
+      },
+      "wilcoxon": [
+        {
+          "so sánh": "norag vs cove@adapted",
+          "chỉ số": "material_rating",
+          "n cặp": 100,
+          "TB norag": "4.69",
+          "TB phương pháp": "4.49",
+          "p-value": "0.0117"
+        },
+        {
+          "so sánh": "norag vs cove@adapted",
+          "chỉ số": "explanation_rating",
+          "n cặp": 100,
+          "TB norag": "4.77",
+          "TB phương pháp": "4.64",
+          "p-value": "0.1044"
+        },
+        {
+          "so sánh": "norag vs rag@adapted",
+          "chỉ số": "material_rating",
+          "n cặp": 100,
+          "TB norag": "4.69",
+          "TB phương pháp": "4.46",
+          "p-value": "0.0071"
+        },
+        {
+          "so sánh": "norag vs rag@adapted",
+          "chỉ số": "explanation_rating",
+          "n cặp": 100,
+          "TB norag": "4.77",
+          "TB phương pháp": "4.62",
+          "p-value": "0.0808"
+        }
+      ]
+    },
+    "human_llm_agreement": {
+      "n_common_items": 0,
+      "per_judge": [],
+      "disagreements": []
+    }
+  }
+}

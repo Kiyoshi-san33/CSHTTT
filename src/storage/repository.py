@@ -29,6 +29,18 @@ def done_run_ids(cfg: dict, experiment_id: str) -> set[str]:
         return set(s.scalars(q))
 
 
+def get_done_run_answer(cfg: dict, run_id: str) -> str | None:
+    """Lấy câu trả lời của một run đã hoàn tất (dùng để tái sử dụng RAG baseline cho CoVe bước 1)."""
+    try:
+        with session_scope(cfg) as s:
+            r = s.get(Run, run_id)
+            if r is not None and r.status == "done" and (r.answer or "").strip():
+                return r.answer
+    except Exception:  # noqa: BLE001
+        return None
+    return None
+
+
 def _call_row(call: LLMCall, run_id: str | None, purpose: str) -> LLMCallRow:
     r = call.response
     return LLMCallRow(

@@ -45,12 +45,15 @@ class BaseLLM(ABC):
         self.spec = dict(spec)
         self.name: str = spec["name"]
         self.model: str = spec["model"]
+        self.fallback_models: list[str] = [m for m in (spec.get("fallback_models") or []) if m != self.model]
+        self._fallback_idx: int = -1
         self.provider_cfg: dict = (cfg.get("providers") or {}).get(spec["provider"], {}) or {}
         self.min_interval = 60.0 / float(spec.get("rpm", 60))
         tpm_val = spec.get("tpm")
         self.tpm: float | None = float(tpm_val) if tpm_val else None
         self._next_allowed = 0.0
         self._lock = threading.Lock()
+        self.num_keys: int = 1
         gen = cfg.get("generation", {})
         self.temperature = float(spec.get("temperature", gen.get("temperature", 0.0)))
         self.max_tokens = int(spec.get("max_tokens", gen.get("max_tokens", 4000)))
@@ -100,6 +103,12 @@ class BaseLLM(ABC):
                         f"Cách xử lý: (1) Thêm GROQ_API_KEY_2=... của tài khoản Groq khác vào file .env để chạy tiếp ngay, "
                         f"hoặc (2) chạy trước model Gemini bằng lệnh: python -m src.experiments.runner --exp exp2 --models gemini_flash"
                     ) from e
+                if (status in (500, 502, 503, 504) or "503" in msg or "UNAVAILABLE" in msg or "timed out" in msg.lower()):
+                    if self.rotate_model():
+                        continue
+                if (status == 429 or "429" in msg or "RateLimit" in type(e).__name__) and attempt >= 1:
+                    if self.rotate_model():
+                        continue
                 last_err = e
                 m_wait = _RETRY_AFTER_RE.search(msg)
                 if m_wait:
@@ -109,10 +118,8 @@ class BaseLLM(ABC):
                 else:
                     wait_s = delay
                     delay = min(delay * 2, 120)
-                print(f"  [{self.name}] chạm giới hạn tốc độ API (lần {attempt + 1}) -> đợi {wait_s:.0f}s cho hồi hạn mức...")
-                time.sleep(wait_s)
-                with self._lock:
-                    self._next_allowed = max(self._next_allowed, time.time() + self.min_interval)
+                print(f"  [{self.name}] chạm giới hạn tốc độ API (lần {attempt + 1}) -> đợi/chuyển key ({wait_s:.0f}s)...")
+                self._penalize_current_key(wait_s)
         raise LLMError(f"[{self.name}] thất bại sau {self.max_attempts} lần thử: {last_err}")
 
     def list_models(self) -> list[str] | None:
@@ -122,6 +129,26 @@ class BaseLLM(ABC):
     def rotate_key(self) -> bool:
         """Chuyển sang API key tiếp theo nếu có (mặc định False)."""
         return False
+
+    def rotate_model(self) -> bool:
+        """Chuyển sang model dự phòng tiếp theo khi model chính bị quá tải (503) hoặc hết quota (429)."""
+        with self._lock:
+            next_idx = self._fallback_idx + 1
+            if next_idx >= len(self.fallback_models):
+                return False
+            old_model = self.model
+            self._fallback_idx = next_idx
+            self.model = self.fallback_models[next_idx]
+            self._next_allowed = 0.0
+            if hasattr(self, "_key_next_allowed"):
+                self._key_next_allowed = [0.0 for _ in self._key_next_allowed]
+            print(f"  [{self.name}] Model {old_model} chạm giới hạn/quá tải -> tự động chuyển sang {self.model}!")
+            return True
+
+    def _penalize_current_key(self, wait_s: float) -> None:
+        time.sleep(wait_s)
+        with self._lock:
+            self._next_allowed = max(self._next_allowed, time.time() + self.min_interval)
 
     # ------------------------------------------------------------- internal
     def _wait(self):

@@ -31,8 +31,8 @@ generators:
     price_per_mtok: [0.15, 0.60]
   - name: gemini_flash
     provider: gemini
-    model: "gemini-3.8-flash"
-    rpm: 9
+    model: "gemini-3.5-flash-lite"
+    rpm: 15
     params: {reasoning_effort: low}
     price_per_mtok: null
 

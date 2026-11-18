@@ -1,0 +1,101 @@
+﻿id,exp,item_id,annotator,kind,judge_model_id,created_at,updated_at,plausible,dont_know
+1,exp1,air filter||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:40.304333,2026-11-18 10:38:40.303334,"[true, true, true, true, true]",False
+2,exp1,alternator||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:41.584850,2026-11-18 10:38:41.583611,"[true, true, true, true, true]",False
+3,exp1,ball joint||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:41.966417,2026-11-18 10:38:41.965417,"[true, true, true, true, true]",False
+4,exp1,battery terminal||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:42.591097,2026-11-18 10:38:42.591097,"[true, true, true, true, true]",False
+5,exp1,brake booster||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:43.747472,2026-11-18 10:38:43.746472,"[true, true, true, true, true]",False
+6,exp1,brake caliper||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:44.667453,2026-11-18 10:38:44.667453,"[true, true, true, true, false]",False
+7,exp1,brake disc||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:44.965966,2026-11-18 10:38:44.965456,"[true, true, true]",False
+8,exp1,brake hose||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:46.234961,2026-11-18 10:38:46.234961,"[true, true, true, true, true]",False
+9,exp1,brake pad||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:46.967806,2026-11-18 10:38:46.966792,"[true, true, true, true, true]",False
+10,exp1,bumper cover||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:47.386146,2026-11-18 10:38:47.386146,"[true, true, true, true, true]",False
+11,exp1,cabin air filter||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:48.757681,2026-11-18 10:38:48.756680,"[true, true, true, true, true]",False
+12,exp1,camshaft position sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:49.521542,2026-11-18 10:38:49.521542,"[true, true, true, true, true]",False
+13,exp1,catalytic converter||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:50.126547,2026-11-18 10:38:50.126547,"[true, true, true, true, true]",False
+14,exp1,charge air cooler water sprayer||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:51.063011,2026-11-18 10:38:51.063011,"[true, true, true, true, true]",False
+15,exp1,clutch disc||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:52.080536,2026-11-18 10:38:52.079533,"[true, true, true, true, false]",False
+16,exp1,clutch release bearing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:52.386171,2026-11-18 10:38:52.386171,"[true, true, true, true, true]",False
+17,exp1,coil spring||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:53.448132,2026-11-18 10:38:53.447132,"[true, true, true, true, true]",False
+18,exp1,connecting rod||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:54.375921,2026-11-18 10:38:54.374908,"[true, true, true, true, false]",False
+19,exp1,control arm bushing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:54.801750,2026-11-18 10:38:54.800750,"[true, true, true, true, true]",False
+20,exp1,coolant reservoir||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:55.845407,2026-11-18 10:38:55.845407,"[true, true, true, false, false]",False
+21,exp1,cooling fan blade||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:57.409206,2026-11-18 10:38:57.409206,"[true, true, true, true, false]",False
+22,exp1,crankshaft pulley||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:57.867979,2026-11-18 10:38:57.867979,"[true, true, true, true, false]",False
+23,exp1,crankshaft seal||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:58.302654,2026-11-18 10:38:58.301654,"[true, true, true, true, true]",False
+24,exp1,cylinder head gasket||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:38:59.839683,2026-11-18 10:38:59.839683,"[true, true, false, true, false]",False
+25,exp1,dashboard panel||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:00.249104,2026-11-18 10:39:00.249104,"[true, true, true, true, true]",False
+26,exp1,diesel particulate filter||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:00.795498,2026-11-18 10:39:00.795498,"[true, true, true, true, true]",False
+27,exp1,door hinge||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:02.246593,2026-11-18 10:39:02.246593,"[true, true, true, true, true]",False
+28,exp1,door seal||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:02.627305,2026-11-18 10:39:02.627305,"[true, true, true, true, true]",False
+29,exp1,drive shaft||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:03.224861,2026-11-18 10:39:03.224861,"[true, true, true, true, true]",False
+30,exp1,drum brake shoe||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:04.665584,2026-11-18 10:39:04.665584,"[false, true, true, false, false]",False
+31,exp1,egr valve||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:05.038819,2026-11-18 10:39:05.037826,"[true, true, true, true, true]",False
+32,exp1,engine mount||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:05.613446,2026-11-18 10:39:05.612446,"[true, true, true, false, true]",False
+33,exp1,engine piston||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:07.181425,2026-11-18 10:39:07.181425,"[true, true, true, false, false]",False
+34,exp1,exhaust manifold||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:07.712028,2026-11-18 10:39:07.712028,"[true, true, true, true, true]",False
+35,exp1,exhaust valve||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:08.232375,2026-11-18 10:39:08.232375,"[true, true, true, true, false]",False
+36,exp1,fan clutch||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:09.766518,2026-11-18 10:39:09.766518,"[true, true, true, true, true]",False
+37,exp1,flywheel ring gear||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:10.055141,2026-11-18 10:39:10.055141,"[true, true, true, false, false]",False
+38,exp1,fuel filler neck||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:10.857031,2026-11-18 10:39:10.856032,"[true, true, true, true, true]",False
+39,exp1,fuel injector||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:12.248542,2026-11-18 10:39:12.248542,"[true, true, false, true, true]",False
+40,exp1,fuel pressure regulator||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:12.929935,2026-11-18 10:39:12.929935,"[true, true, true, true, true]",False
+41,exp1,fuel pump||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:13.275207,2026-11-18 10:39:13.275207,"[false, true, true, true, true]",False
+42,exp1,fuel rail||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:14.594709,2026-11-18 10:39:14.594709,"[true, true, true, true, false]",False
+43,exp1,fuel tank||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:15.408500,2026-11-18 10:39:15.408500,"[true, true, true, true, true]",False
+44,exp1,fuse box cover||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:15.704499,2026-11-18 10:39:15.704499,"[true, true, true, true, true]",False
+45,exp1,glow plug||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:16.981257,2026-11-18 10:39:16.980257,"[true, true, true, true, false]",False
+46,exp1,head restraint||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:17.833586,2026-11-18 10:39:17.833586,"[true, true, true, true, true]",False
+47,exp1,headlamp reflector||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:18.120903,2026-11-18 10:39:18.119904,"[true, true, true, true, true]",False
+48,exp1,heat shield||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:19.457152,2026-11-18 10:39:19.457152,"[true, true, true, false, true]",False
+49,exp1,heater core||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:20.433823,2026-11-18 10:39:20.433823,"[true, true, true, true, true]",False
+50,exp1,high-pressure fuel pump||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:21.062085,2026-11-18 10:39:21.062085,"[true, true, true, false, true]",False
+51,exp1,hood latch||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:21.813010,2026-11-18 10:39:21.812010,"[true, true, true, true, true]",False
+52,exp1,ignition coil||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:22.669586,2026-11-18 10:39:22.669586,"[true, true, true, true, false]",False
+53,exp1,intake manifold||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:23.445306,2026-11-18 10:39:23.445306,"[true, true, true, true, true]",False
+54,exp1,intercooler pipe||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:24.171734,2026-11-18 10:39:24.171734,"[true, true, true, true, true]",False
+55,exp1,knock sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:25.277161,2026-11-18 10:39:25.277161,"[true, false, true, true, true]",False
+56,exp1,lambda sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:26.042814,2026-11-18 10:39:26.042814,"[true, true, true, true, true]",False
+57,exp1,leaf spring||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:26.599964,2026-11-18 10:39:26.599964,"[true, true, false, true, true]",False
+58,exp1,lithium-ion battery cell||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:27.656150,2026-11-18 10:39:27.655150,"[true, true, true, true, true]",False
+59,exp1,mass airflow sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:28.408099,2026-11-18 10:39:28.408099,"[true, true, true, true, true]",False
+60,exp1,master cylinder||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:28.996644,2026-11-18 10:39:28.996644,"[true, true, true, true, true]",False
+61,exp1,muffler||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:30.182861,2026-11-18 10:39:30.182861,"[true, true, true, false, false]",False
+62,exp1,oil cooler||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:30.687166,2026-11-18 10:39:30.686114,"[true, true, true, true, true]",False
+63,exp1,oil filter||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:31.433958,2026-11-18 10:39:31.433958,"[true, true, true, true, true]",False
+64,exp1,oil pan||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:32.562196,2026-11-18 10:39:32.562196,"[true, true, true, true, true]",False
+65,exp1,oxygen sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:33.092941,2026-11-18 10:39:33.092941,"[true, true, true, true, false]",False
+66,exp1,parking brake cable||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:33.811142,2026-11-18 10:39:33.811142,"[true, true, true, true, false]",False
+67,exp1,piston ring||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:35.171212,2026-11-18 10:39:35.171212,"[true, true, true, false, true]",False
+68,exp1,power steering hose||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:35.505894,2026-11-18 10:39:35.505894,"[true, true, true, true, false]",False
+69,exp1,pressure plate||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:36.560943,2026-11-18 10:39:36.559430,"[true, true, false, false, false]",False
+70,exp1,radiator fan shroud||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:37.685686,2026-11-18 10:39:37.685686,"[true, true, true, true, true]",False
+71,exp1,radiator hose||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:37.994821,2026-11-18 10:39:37.994821,"[true, true, true, false, false]",False
+72,exp1,refrigerant bypass valve||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:38.921966,2026-11-18 10:39:38.921966,"[true, true, true, true, true]",False
+73,exp1,rocker arm||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:39.960454,2026-11-18 10:39:39.959454,"[true, false, true, false, false]",False
+74,exp1,seat belt||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:40.502932,2026-11-18 10:39:40.502932,"[true, true, true, true, true]",False
+75,exp1,seat cover||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:41.627710,2026-11-18 10:39:41.627710,"[true, true, true, true, true]",False
+76,exp1,shock absorber||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:42.359929,2026-11-18 10:39:42.359929,"[true, true, true, true, true]",False
+77,exp1,side mirror housing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:42.805269,2026-11-18 10:39:42.805269,"[true, true, true, true, true]",False
+78,exp1,spark plug||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:43.966551,2026-11-18 10:39:43.966551,"[true, true, true, true, true]",False
+79,exp1,starter motor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:44.764099,2026-11-18 10:39:44.764099,"[true, true, true, true, true]",False
+80,exp1,steering rack boot||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:45.216959,2026-11-18 10:39:45.216959,"[true, true, true, true, true]",False
+81,exp1,steering wheel||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:46.600050,2026-11-18 10:39:46.600050,"[true, true, true, true, true]",False
+82,exp1,sun visor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:47.169947,2026-11-18 10:39:47.169947,"[true, true, true, true, true]",False
+83,exp1,sway bar link||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:47.622913,2026-11-18 10:39:47.622913,"[true, false, false, true, true]",False
+84,exp1,tail lamp lens||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:49.057414,2026-11-18 10:39:49.057414,"[true, true, true, false, false]",False
+85,exp1,thermostat housing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:49.664226,2026-11-18 10:39:49.664226,"[true, true, true, true, true]",False
+86,exp1,throttle body||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:50.016740,2026-11-18 10:39:50.016740,"[true, true, true, true, true]",False
+87,exp1,tie rod end||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:51.415920,2026-11-18 10:39:51.415920,"[true, false, true, false, true]",False
+88,exp1,timing belt||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:51.962215,2026-11-18 10:39:51.962215,"[true, true, true, true, false]",False
+89,exp1,timing chain||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:52.440823,2026-11-18 10:39:52.439819,"[true, true, true, true, false]",False
+90,exp1,turbocharger housing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:53.905219,2026-11-18 10:39:53.905219,"[true, true, true, true, true]",False
+91,exp1,universal joint||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:54.365616,2026-11-18 10:39:54.364618,"[true, true, false, true, true]",False
+92,exp1,valve cover gasket||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:54.834441,2026-11-18 10:39:54.834441,"[true, true, true, true, true]",False
+93,exp1,valve spring||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:56.316842,2026-11-18 10:39:56.315842,"[true, true, true, true, true]",False
+94,exp1,water pump impeller||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:56.789707,2026-11-18 10:39:56.789707,"[true, true, true, true, true]",False
+95,exp1,wheel bearing||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:57.350847,2026-11-18 10:39:57.349847,"[true, true, true, true, true]",False
+96,exp1,wheel rim||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:58.745590,2026-11-18 10:39:58.745590,"[true, true, true, true, true]",False
+97,exp1,wheel speed sensor||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:59.175790,2026-11-18 10:39:59.174790,"[true, true, true, true, true]",False
+98,exp1,window regulator||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:39:59.735710,2026-11-18 10:39:59.735710,"[true, true, true, true, true]",False
+99,exp1,wiper blade||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:40:01.127399,2026-11-18 10:40:01.127399,"[true, true, true, true, true]",False
+100,exp1,wiring harness connector||gpt_oss_120b||few-shot,judge_qwen38_27b,llm,qwen/qwen3.8-27b,2026-11-18 10:40:01.546235,2026-11-18 10:40:01.546235,"[true, true, true, true, true]",False
